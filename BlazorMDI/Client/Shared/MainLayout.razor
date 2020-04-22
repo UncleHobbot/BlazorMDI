@@ -1,15 +1,97 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
 
-<div class="sidebar">
-    <NavMenu />
+@inject NavigationManager NavigationManager
+
+<nav class="top-row logo-container p-0 navbar navbar-dark fixed-top flex-nowrap">
+    <button class="navbar-toggler d-block bg-primary border-0" @onclick="@ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    MDI Demo
+    @*<span class="logo-image" @onclick="@(() => { NavigationManager.NavigateTo(NavigationManager.BaseUri); })" />*@
+    <div class="demo-btn-container d-flex">
+        <div class="@($"bg-light text-dark d-inline-block theme-settings { ThemeSwitcherShown }")">
+            <a class="nav-item nav-link" @onclick="@ToggleThemeSwitcherPanel" href="javascript:void(0);">
+                <span class="demo-theme-icon"></span>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="sidebar @NavMenuCssClass">
+    <DxScrollView>
+        <div>
+            <NavMenu />
+        </div>
+    </DxScrollView>
+    <div class="footer">
+        <div class="info-wrapper">
+            <div class="version">Version: 0.1</div>
+            <div class="copyright">
+                <span>Copyright &copy; @(DateTime.Now.Year.ToString())</span>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="main">
-    <div class="top-row px-4">
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-    </div>
-
     <div class="content px-4">
         @Body
     </div>
+    <div class="footer">
+        <div class="info-wrapper">
+            <div class="version">Version: 0.2</div>
+            <div class="copyright">
+                <span>Copyright &copy; @(DateTime.Now.Year.ToString())</span>
+            </div>
+        </div>
+    </div>
 </div>
+
+<ThemeSwitcher @bind-Shown="@ThemeSwitcherShown"></ThemeSwitcher>
+
+@code {
+    string NavMenuCssClass { get; set; } = "";
+
+    void ToggleNavMenu()
+    {
+        NavMenuCssClass = string.IsNullOrEmpty(NavMenuCssClass) || NavMenuCssClass.Contains("d-none") ? "d-block d-xl-none" : "d-none d-xl-flex";
+        ThemeSwitcherShown = false;
+    }
+
+    bool themeSwitcherShown = false;
+    bool ThemeSwitcherShown {
+        get => themeSwitcherShown;
+        set {
+            themeSwitcherShown = value;
+            InvokeAsync(StateHasChanged); 
+        }
+    }
+
+    void ToggleThemeSwitcherPanel()
+    {
+        ThemeSwitcherShown = !ThemeSwitcherShown;
+    }
+
+    string UriFragment { get; set; } = "";
+
+    void OnLocationChanged(object sender, LocationChangedEventArgs args)
+    {
+        if (!string.IsNullOrEmpty(NavMenuCssClass))
+        {
+            NavMenuCssClass = "";
+            InvokeAsync(StateHasChanged);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    void IDisposable.Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}

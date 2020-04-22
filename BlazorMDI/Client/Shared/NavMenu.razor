@@ -1,37 +1,56 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">BlazorMDI</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
+﻿@using System.Net
+@using BlazorMDI.Shared
+@using BlazorMDI.Shared.Navigation
+@inject HttpClient Http
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
+<DxTreeView @ref="@treeView"
+            Data="@nodes"
+            TextExpression="@(dataItem => ((NavTreeNode)dataItem).Title)"
+            ChildrenExpression="@(dataItem => ((NavTreeNode)dataItem).SubNodes)"
+            CssClass="app-sidebar"
+            ExpandButtonIconCssClass="demo-icon-expand"
+            CollapseButtonIconCssClass="demo-icon-collapse"
+            AllowSelectNodes="true"
+            NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick"
+            BeforeExpand="@BeforeExpand"
+            SelectionChanged="@SelectionChanged">
+
+    @*TextExpression - A lambda expression that returns the node’s text.
+    NameExpression - A lambda expression that returns the node’s unique identifier (name).
+    IconCssClassExpression - A lambda expression that returns the name of a CSS class applied to the node’s icon.
+    NavigateUrlExpression - A lambda expression that returns the node’s target URL.*@
+
+</DxTreeView>
 
 @code {
-    private bool collapseNavMenu = true;
+    DxTreeView treeView;
+    List<NavTreeNode> nodes;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    protected override async Task OnInitializedAsync()
     {
-        collapseNavMenu = !collapseNavMenu;
+        nodes = await Http.GetFromJsonAsync<List<NavTreeNode>>("api/Home/GetTree");
+    }
+
+
+    protected void SelectionChanged(TreeViewNodeEventArgs e)
+    {
+        if (e.NodeInfo.IsLeaf)
+        {
+            var parentInfo = e.NodeInfo.Parent;
+            if (parentInfo != null)
+            {
+                var parentSiblingNodesInfo = treeView.GetNodesInfo(n => !n.IsLeaf && n.Level == parentInfo.Level && !string.Equals(n.Text, parentInfo.Text));
+                foreach (var nodeInfo in parentSiblingNodesInfo)
+                    treeView.SetNodeExpanded(n => string.Equals(n.Text, nodeInfo.Text), false);
+            }
+            //else
+            //    treeView.CollapseAll();
+        }
+    }
+
+    protected void BeforeExpand(TreeViewNodeCancelEventArgs e)
+    {
+        //if (!e.CausedByAPI)
+        //    treeView.CollapseAll();
     }
 }

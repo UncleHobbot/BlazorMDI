@@ -3,11 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
-    <AssemblyVersion>1.0.20112.0</AssemblyVersion>
-    <FileVersion>1.0.20112.0</FileVersion>
+    <AssemblyVersion>1.0.20113.12</AssemblyVersion>
+    <FileVersion>1.0.20113.12</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExpress.Blazor" Version="19.2.5-preview" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0-preview4.20210.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.0-preview4.20210.8" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0-preview4.20210.8" PrivateAssets="all" />
