@@ -7,6 +7,8 @@ namespace BlazorMDI.Shared.Navigation
         public string Title { get; set; }
         public bool HasNavigation { get; set; }
         public string NavigateUrl { get; set; }
+        public string Icon { get; set; }
+      
         public List<NavTreeNode> SubNodes { get; set; } = new List<NavTreeNode>();
     }
 }

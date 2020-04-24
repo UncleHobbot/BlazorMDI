@@ -1,11 +1,11 @@
-﻿@using System.Net
-@using BlazorMDI.Shared
-@using BlazorMDI.Shared.Navigation
+﻿@using BlazorMDI.Shared.Navigation
 @inject HttpClient Http
 
 <DxTreeView @ref="@treeView"
             Data="@nodes"
             TextExpression="@(dataItem => ((NavTreeNode)dataItem).Title)"
+            NavigateUrlExpression="@(dataItem => ((NavTreeNode)dataItem).NavigateUrl)"
+            IconCssClassExpression="@(dataItem => ((NavTreeNode)dataItem).Icon)"
             ChildrenExpression="@(dataItem => ((NavTreeNode)dataItem).SubNodes)"
             CssClass="app-sidebar"
             ExpandButtonIconCssClass="demo-icon-expand"
@@ -23,7 +23,7 @@
 </DxTreeView>
 
 @code {
-    DxTreeView treeView;
+    public DxTreeView treeView;
     List<NavTreeNode> nodes;
 
     protected override async Task OnInitializedAsync()
