@@ -7,7 +7,9 @@
     <button class="navbar-toggler d-block bg-primary border-0" @onclick="@ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
-    MDI Demo
+    <div style="margin-left: 20px">
+        <i class="fad fa-2x fa-window-alt"></i> MDI Manager
+    </div>
     @*<span class="logo-image" @onclick="@(() => { NavigationManager.NavigateTo(NavigationManager.BaseUri); })" />*@
     <div class="demo-btn-container d-flex">
         <div class="@($"bg-light text-dark d-inline-block theme-settings { ThemeSwitcherShown }")">
@@ -60,11 +62,13 @@
     }
 
     bool themeSwitcherShown = false;
-    bool ThemeSwitcherShown {
+    bool ThemeSwitcherShown
+    {
         get => themeSwitcherShown;
-        set {
+        set
+        {
             themeSwitcherShown = value;
-            InvokeAsync(StateHasChanged); 
+            InvokeAsync(StateHasChanged);
         }
     }
 

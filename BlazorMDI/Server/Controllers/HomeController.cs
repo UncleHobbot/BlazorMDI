@@ -29,7 +29,7 @@ namespace BlazorMDI.Server.Controllers
                     new NavTreeNode {Title = "Form Actions", HasNavigation = false}
                 }
                 });
-                an.SubNodes.Add(new NavTreeNode { Title = "Entities", HasNavigation = false });
+                an.SubNodes.Add(new NavTreeNode { Title = "Entities", HasNavigation = false, Icon = "fad fa-puzzle-piece"});
                 res.Add(an);
             }
 
