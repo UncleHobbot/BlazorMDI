@@ -1,5 +1,4 @@
 ﻿using DevExpress.Blazor.Base;
-using DevExpress.Blazor.Internal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
@@ -16,9 +15,6 @@ namespace BlazorDemo.ClientSide.Shared
 
         public DxScrollViewBase() { }
 
-        protected override Task InitClientSide(bool firstRender)
-        {
-            return JsRuntime.InvokeAsync<string>("ScrollViewInit", InputElement).AsTask();
-        }
+        protected override Task InitClientSide(bool firstRender) => JsRuntime.InvokeAsync<string>("ScrollViewInit", InputElement).AsTask();
     }
 }
