@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
-    <AssemblyVersion>1.0.20125.11</AssemblyVersion>
-    <FileVersion>1.0.20125.11</FileVersion>
+    <AssemblyVersion>1.0.20127.12</AssemblyVersion>
+    <FileVersion>1.0.20127.12</FileVersion>
     <JsLibRoot>JSLib\</JsLibRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(JsLibRoot)node_modules\**</DefaultItemExcludes>
   </PropertyGroup>
