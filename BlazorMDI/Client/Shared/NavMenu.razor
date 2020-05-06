@@ -3,9 +3,6 @@
 
 <DxTreeView @ref="@treeView"
             Data="@nodes"
-            TextExpression="@(dataItem => ((NavTreeNode)dataItem).Title)"
-            NavigateUrlExpression="@(dataItem => ((NavTreeNode)dataItem).NavigateUrl)"
-            IconCssClassExpression="@(dataItem => ((NavTreeNode)dataItem).Icon)"
             ChildrenExpression="@(dataItem => ((NavTreeNode)dataItem).SubNodes)"
             CssClass="app-sidebar"
             ExpandButtonIconCssClass="demo-icon-expand"
@@ -15,11 +12,48 @@
             BeforeExpand="@BeforeExpand"
             SelectionChanged="@SelectionChanged">
 
+    @*TextExpression="@(dataItem => ((NavTreeNode)dataItem).Title)"
+    NavigateUrlExpression="@(dataItem => ((NavTreeNode)dataItem).NavigateUrl)"
+    IconCssClassExpression="@(dataItem => ((NavTreeNode)dataItem).Icon)"*@
+
+
     @*TextExpression - A lambda expression that returns the node’s text.
     NameExpression - A lambda expression that returns the node’s unique identifier (name).
     IconCssClassExpression - A lambda expression that returns the name of a CSS class applied to the node’s icon.
     NavigateUrlExpression - A lambda expression that returns the node’s target URL.*@
-
+    
+    <NodeTemplate>
+        @{
+            var dataItem = (NavTreeNode)context.DataItem;
+        }
+        @if (!context.IsLeaf)
+        {
+            if (dataItem.IsTopLevel)
+            {
+                <h4 class="my-0 p-1 d-flex align-items-center justify-content-between">
+                    <span class="mr-3">@dataItem.Title</span>
+                    <i class="@GetExpandButtonCssClass(dataItem)" style="top: 0px"></i>
+                </h4>
+            }
+            else
+            {
+                <h5 class="my-0 ml-2 p-1 d-flex align-items-center justify-content-between">
+                    <span class="mr-3">@dataItem.Title</span>
+                    <i class="@GetExpandButtonCssClass(dataItem)" style="top: 0px"></i>
+                </h5>
+            }
+        }
+        else
+        {
+            <div class="media p-2 ml-4">
+                <i class="@dataItem.Icon fa-2x" style="padding: 2px; width: 30px; height: 30px;" alt="@dataItem.Title" />
+                <div>
+                    <h6 class="mt-2 mb-0">@dataItem.Title</h6>
+                    <small style="display: inline-block; line-height: 1.2">@dataItem.Description</small>
+                </div>
+            </div>
+        }
+    </NodeTemplate>
 </DxTreeView>
 
 @code {
@@ -53,4 +87,10 @@
         //if (!e.CausedByAPI)
         //    treeView.CollapseAll();
     }
+
+    string GetExpandButtonCssClass(NavTreeNode nodeDataItem) =>
+        $"oi oi-chevron-{(treeView.GetNodeExpanded(n => n.DataItem == nodeDataItem) ? "bottom" : "right")}";
+
+    //string GetExpandButtonCssClass2(NavTreeNode nodeDataItem) =>
+    //    $"fad fa-chevron-{(treeView.GetNodeExpanded(n => n.DataItem == nodeDataItem) ? "down" : "right")}";
 }
