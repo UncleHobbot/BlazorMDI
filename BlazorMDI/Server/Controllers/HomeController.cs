@@ -1,5 +1,7 @@
-﻿using BlazorMDI.Shared.Navigation;
+﻿using BlazorMDI.Shared.GridData;
+using BlazorMDI.Shared.Navigation;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace BlazorMDI.Server.Controllers
@@ -30,7 +32,7 @@ namespace BlazorMDI.Server.Controllers
                     {
                     new NavTreeNode
                     {
-                        Title = "Form Management", Icon="fad fa-pen-square", HasNavigation = false,
+                        Title = "Form Management", Icon="fad fa-pen-square", HasNavigation = true, NavigateUrl = "FormManagement",
                         Description = "Create and design application forms"
                     },
                     new NavTreeNode
@@ -60,5 +62,43 @@ namespace BlazorMDI.Server.Controllers
 
             return res;
         }
+
+        [HttpGet]
+        [Route("GetFormsList")]
+        public IEnumerable<FormMgmtGrid> GetFormsList()
+        {
+            var rnd = new Random();
+            var res = new List<FormMgmtGrid>
+            {
+                new FormMgmtGrid
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "frmAuditPlan",
+                    Title = "Audit Plan",
+                    ObjectName = "App.FormObject.AuditPlanDS",
+                    LastModified = DateTime.Today.AddHours(-rnd.Next(1, 500))
+                },
+                new FormMgmtGrid
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "frmAuditChecklist",
+                    Title = "Audit Checklist",
+                    ObjectName = "App.FormObject.AuditChecklistDS",
+                    LastModified = DateTime.Today.AddHours(-rnd.Next(1, 500))
+                },
+                new FormMgmtGrid
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "frmChecklistDetail",
+                    Title = "Checklist Detail",
+                    ObjectName = "App.FormObject.ChecklistDetailDS",
+                    LastModified = DateTime.Today.AddHours(-rnd.Next(1, 500))
+                }
+            };
+
+
+            return res;
+        }
+
     }
 }

@@ -1,0 +1,23 @@
+﻿@page "/FormManagement"
+
+@using BlazorMDI.Client.Data
+@using BlazorMDI.Shared.GridData
+@inject GridService GridService
+
+<h3>FormManagement</h3>
+
+<DxDataGrid DataAsync="@GridService.GetFormMgmtAsync"
+            PageSize="5"
+            ShowFilterRow="false"
+            style="width:70%">
+
+    <DxDataGridColumn Field="@nameof(FormMgmtGrid.Name)" Caption="Name" Width="200px"></DxDataGridColumn>
+    <DxDataGridColumn Field="@nameof(FormMgmtGrid.Title)" Caption="Title" Width="200px"></DxDataGridColumn>
+    <DxDataGridColumn Field="@nameof(FormMgmtGrid.ObjectName)" Caption="Object Name" Width="300px"></DxDataGridColumn>
+    <DxDataGridDateEditColumn Field="@nameof(FormMgmtGrid.LastModified)" DisplayFormat="g" ></DxDataGridDateEditColumn>
+</DxDataGrid>
+
+
+@code {
+
+}
