@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.20133.7</AssemblyVersion>
-    <FileVersion>1.0.20133.7</FileVersion>
+    <AssemblyVersion>1.0.20134.9</AssemblyVersion>
+    <FileVersion>1.0.20134.9</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lorem.NET" Version="1.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0-rc1.20223.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.4.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.4.1" />

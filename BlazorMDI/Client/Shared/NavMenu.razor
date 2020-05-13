@@ -1,4 +1,5 @@
 ﻿@using BlazorMDI.Shared.Navigation
+@using System.Net
 @inject HttpClient Http
 
 <DxTreeView @ref="@treeView"
@@ -50,13 +51,17 @@
                 <div>
                     @if (dataItem.HasNavigation && !string.IsNullOrEmpty(dataItem.NavigateUrl))
                     {
-                        <NavLink href="@dataItem.NavigateUrl">
+                        <NavLink href="@(dataItem.NavigateUrl+"/"+dataItem.AppName+"/"+WebUtility.UrlEncode(dataItem.AppTitle))" class="d-inline-block">
                             <h6 class="mt-2 mb-0"> @dataItem.Title</h6>
                         </NavLink>
                     }
                     else
                     {
-                        <h6 class="mt-2 mb-0"> @dataItem.Title</h6>
+                        <h6 class="mt-2 mb-0 d-inline-block"> @dataItem.Title</h6>
+                    }
+                    @if (dataItem.Badge != NodeBadgeEnum.None)
+                    {
+                        <span class="badge float-right">@dataItem.BadgeString</span>
                     }
                     <small style="display: inline-block; line-height: 1.2">@dataItem.Description</small>
                 </div>

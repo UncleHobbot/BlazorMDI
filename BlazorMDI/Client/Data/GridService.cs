@@ -15,7 +15,7 @@ namespace BlazorMDI.Client.Data
             _client = client;
         }
 
-        public Task<IEnumerable<FormMgmtGrid>> GetFormMgmtAsync(CancellationToken ct = default) 
-            => _client.GetFromJsonAsync<IEnumerable<FormMgmtGrid>>("api/Home/GetFormsList", cancellationToken: ct);
+        public Task<IEnumerable<FormMgmtGrid>> GetFormMgmtAsync(string appName, CancellationToken ct = default) 
+            => _client.GetFromJsonAsync<IEnumerable<FormMgmtGrid>>($"api/Home/GetFormsList?appName={appName}", cancellationToken: ct);
     }
 }

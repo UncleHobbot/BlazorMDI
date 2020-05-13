@@ -3,6 +3,7 @@ using BlazorMDI.Shared.Navigation;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace BlazorMDI.Server.Controllers
 {
@@ -15,15 +16,21 @@ namespace BlazorMDI.Server.Controllers
         public IEnumerable<NavTreeNode> GetNavTree()
         {
             var res = new List<NavTreeNode>();
-            
+
             for (var i = 1; i < 10; i++)
             {
-                var an = new NavTreeNode { Title = "Application " + i, HasNavigation = false, IsTopLevel = true};
+                var appName = "app" + i;
+                var appTitle = LoremNET.Lorem.Words(1, 3);
+
+                var an = new NavTreeNode { Title = appTitle, HasNavigation = false, IsTopLevel = true };
                 an.SubNodes.Add(new NavTreeNode
                 {
-                    Title = "Processes", Icon="fad fa-cogs", HasNavigation = false,
+                    Title = "Processes",
+                    Icon = "fad fa-cogs",
+                    HasNavigation = false,
                     Description = "Processes allow to create a flow of data among forms"
                 });
+
                 an.SubNodes.Add(new NavTreeNode
                 {
                     Title = "Forms",
@@ -32,8 +39,9 @@ namespace BlazorMDI.Server.Controllers
                     {
                     new NavTreeNode
                     {
-                        Title = "Form Management", Icon="fad fa-pen-square", HasNavigation = true, NavigateUrl = "FormManagement",
-                        Description = "Create and design application forms"
+                        Title = "Form Management", Icon="fad fa-pen-square", HasNavigation = true,
+                        NavigateUrl = "FormManagement", AppName = appName, AppTitle = appTitle,
+                        Description = "Create and design application forms", Badge = NodeBadgeEnum.New
                     },
                     new NavTreeNode
                     {
@@ -54,7 +62,9 @@ namespace BlazorMDI.Server.Controllers
                 });
                 an.SubNodes.Add(new NavTreeNode
                 {
-                    Title = "Entities", HasNavigation = false, Icon = "fad fa-puzzle-piece",
+                    Title = "Entities",
+                    HasNavigation = false,
+                    Icon = "fad fa-puzzle-piece",
                     Description = "Entities store user's data"
                 });
                 res.Add(an);
@@ -65,37 +75,28 @@ namespace BlazorMDI.Server.Controllers
 
         [HttpGet]
         [Route("GetFormsList")]
-        public IEnumerable<FormMgmtGrid> GetFormsList()
+        public IEnumerable<FormMgmtGrid> GetFormsList(string appName)
         {
             var rnd = new Random();
-            var res = new List<FormMgmtGrid>
+            var myTI = new CultureInfo("en-US", false).TextInfo;
+            var res = new List<FormMgmtGrid>();
+
+            var max = rnd.Next(10, 30);
+            for (int i = 0; i < max; i++)
             {
-                new FormMgmtGrid
+                var name = myTI.ToTitleCase(LoremNET.Lorem.Words(2, 3));
+                var sname = name.Replace(" ", "");
+
+                res.Add(new FormMgmtGrid
                 {
                     Id = Guid.NewGuid(),
-                    Name = "frmAuditPlan",
-                    Title = "Audit Plan",
-                    ObjectName = "App.FormObject.AuditPlanDS",
-                    LastModified = DateTime.Today.AddHours(-rnd.Next(1, 500))
-                },
-                new FormMgmtGrid
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "frmAuditChecklist",
-                    Title = "Audit Checklist",
-                    ObjectName = "App.FormObject.AuditChecklistDS",
-                    LastModified = DateTime.Today.AddHours(-rnd.Next(1, 500))
-                },
-                new FormMgmtGrid
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "frmChecklistDetail",
-                    Title = "Checklist Detail",
-                    ObjectName = "App.FormObject.ChecklistDetailDS",
+                    Name = $"frm{sname}",
+                    Title = name,
+                    ObjectName = $"App.{appName}.FormObject.{sname}DS",
                     LastModified = DateTime.Today.AddHours(-rnd.Next(1, 500))
                 }
-            };
-
+                );
+            }
 
             return res;
         }
