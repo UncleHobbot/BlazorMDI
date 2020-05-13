@@ -1,0 +1,57 @@
+﻿@page "/FormManagement/{AppName}/{appTitle}"
+
+@using BlazorMDI.Client.Data
+@using BlazorMDI.Shared.GridData
+@using System.Net
+@using System.Threading
+@inject GridService GridService
+
+<h4>Form Management for @WebUtility.UrlDecode(AppTitle) (@AppName)</h4>
+
+<div class="mb-2">
+    <DxButton RenderStyle="@ButtonRenderStyle.Primary" RenderStyleMode="@ButtonRenderStyleMode.Contained" Text="New" IconCssClass="fad fa-2x mr-2 fa-plus-square" />
+    <DxButton RenderStyle="@ButtonRenderStyle.Primary" RenderStyleMode="@ButtonRenderStyleMode.Contained" Text="Something" IconCssClass="fad fa-2x mr-2 fa-alien-monster" />
+</div>
+
+<DxDataGrid Data="@DataSource"
+            ShowFilterRow="false"
+            ShowPager="true"
+            PagerPageSizeSelectorVisible="true"
+            PagerAllDataRowsItemVisible="true"
+            PagerAllowedPageSizes=@(new int[] {10,20,40})
+            PagerNavigationMode=PagerNavigationMode.InputBox
+            style="width:70%">
+
+    <DxDataGridColumn Field="@nameof(FormMgmtGrid.Name)" Caption="Name" Width="200px">
+        <DisplayTemplate>
+            @{
+                var d = context as FormMgmtGrid;
+                <NavLink href="@($"form/{d.Id}")">@d.Name</NavLink>
+            }
+        </DisplayTemplate>
+    </DxDataGridColumn>
+    <DxDataGridColumn Field="@nameof(FormMgmtGrid.Title)" Caption="Title" Width="200px"></DxDataGridColumn>
+    <DxDataGridColumn Field="@nameof(FormMgmtGrid.ObjectName)" Caption="Object Name" Width="300px"></DxDataGridColumn>
+    <DxDataGridDateEditColumn Field="@nameof(FormMgmtGrid.LastModified)" DisplayFormat="g"></DxDataGridDateEditColumn>
+</DxDataGrid>
+
+
+@code {
+    [Parameter]
+    public string AppName { get; set; }
+    [Parameter]
+    public string AppTitle { get; set; }
+
+    public Task<IEnumerable<FormMgmtGrid>> GetDataAsync(CancellationToken ct = default) => GridService.GetFormMgmtAsync(AppName, ct);
+
+    IEnumerable<FormMgmtGrid> DataSource = new List<FormMgmtGrid>();
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        DataSource = await GridService.GetFormMgmtAsync(AppName);
+    }
+}

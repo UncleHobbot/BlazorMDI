@@ -1,4 +1,5 @@
 ﻿@using BlazorMDI.Shared.Navigation
+@using System.Net
 @inject HttpClient Http
 
 <DxTreeView @ref="@treeView"
@@ -13,15 +14,15 @@
             SelectionChanged="@SelectionChanged">
 
     @*TextExpression="@(dataItem => ((NavTreeNode)dataItem).Title)"
-    NavigateUrlExpression="@(dataItem => ((NavTreeNode)dataItem).NavigateUrl)"
-    IconCssClassExpression="@(dataItem => ((NavTreeNode)dataItem).Icon)"*@
+        NavigateUrlExpression="@(dataItem => ((NavTreeNode)dataItem).NavigateUrl)"
+        IconCssClassExpression="@(dataItem => ((NavTreeNode)dataItem).Icon)"*@
 
 
     @*TextExpression - A lambda expression that returns the node’s text.
-    NameExpression - A lambda expression that returns the node’s unique identifier (name).
-    IconCssClassExpression - A lambda expression that returns the name of a CSS class applied to the node’s icon.
-    NavigateUrlExpression - A lambda expression that returns the node’s target URL.*@
-    
+        NameExpression - A lambda expression that returns the node’s unique identifier (name).
+        IconCssClassExpression - A lambda expression that returns the name of a CSS class applied to the node’s icon.
+        NavigateUrlExpression - A lambda expression that returns the node’s target URL.*@
+
     <NodeTemplate>
         @{
             var dataItem = (NavTreeNode)context.DataItem;
@@ -48,7 +49,20 @@
             <div class="media p-2 ml-4">
                 <i class="@dataItem.Icon fa-2x" style="padding: 2px; width: 30px; height: 30px;" alt="@dataItem.Title" />
                 <div>
-                    <h6 class="mt-2 mb-0">@dataItem.Title</h6>
+                    @if (dataItem.HasNavigation && !string.IsNullOrEmpty(dataItem.NavigateUrl))
+                    {
+                        <NavLink href="@(dataItem.NavigateUrl+"/"+dataItem.AppName+"/"+WebUtility.UrlEncode(dataItem.AppTitle))" class="d-inline-block">
+                            <h6 class="mt-2 mb-0"> @dataItem.Title</h6>
+                        </NavLink>
+                    }
+                    else
+                    {
+                        <h6 class="mt-2 mb-0 d-inline-block"> @dataItem.Title</h6>
+                    }
+                    @if (dataItem.Badge != NodeBadgeEnum.None)
+                    {
+                        <span class="badge float-right">@dataItem.BadgeString</span>
+                    }
                     <small style="display: inline-block; line-height: 1.2">@dataItem.Description</small>
                 </div>
             </div>
