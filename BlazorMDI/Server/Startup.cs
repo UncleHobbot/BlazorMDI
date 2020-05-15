@@ -1,11 +1,11 @@
+using BlazorMDI.Server.DAL.Interfaces;
+using BlazorMDI.Server.DAL.Repositories;
+using BlazorMDI.Server.DAL.Repositories.Fake;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
 using Microsoft.OpenApi.Models;
 
 namespace BlazorMDI.Server
@@ -26,11 +26,15 @@ namespace BlazorMDI.Server
             services.AddDevExpressBlazor();
 
             services.AddControllersWithViews();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
+            services.AddScoped<RepoContainer>();
+            services.AddScoped<INavigationRepo, NavigationRepo>();
+            services.AddScoped<IFormsRepo, FormsRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +73,7 @@ namespace BlazorMDI.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+
         }
     }
 }
