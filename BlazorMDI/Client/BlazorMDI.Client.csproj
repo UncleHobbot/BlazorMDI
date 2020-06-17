@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
-    <AssemblyVersion>1.0.20136.3</AssemblyVersion>
-    <FileVersion>1.0.20136.3</FileVersion>
+    <AssemblyVersion>1.0.20169.0</AssemblyVersion>
+    <FileVersion>1.0.20169.0</FileVersion>
     <JsLibRoot>JSLib\</JsLibRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(JsLibRoot)node_modules\**</DefaultItemExcludes>
   </PropertyGroup>
@@ -33,11 +33,11 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.Blazor" Version="19.2.5-preview" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0-rc1.20223.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="3.2.0-rc1.20217.1" />
+    <PackageReference Include="DevExpress.Blazor" Version="20.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>
