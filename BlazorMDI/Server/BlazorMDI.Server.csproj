@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyVersion>1.0.20276.0</AssemblyVersion>
-    <FileVersion>1.0.20276.0</FileVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyVersion>1.0.20276.6</AssemblyVersion>
+    <FileVersion>1.0.20276.6</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Lorem.NET" Version="1.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0-rc.1.20451.17" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.3" />
