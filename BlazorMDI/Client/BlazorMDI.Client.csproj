@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UseBlazorWebAssembly>true</UseBlazorWebAssembly>
-    <AssemblyVersion>1.0.20316.1</AssemblyVersion>
-    <FileVersion>1.0.20316.1</FileVersion>
+    <AssemblyVersion>1.0.21018.0</AssemblyVersion>
+    <FileVersion>1.0.21018.0</FileVersion>
     <JsLibRoot>JSLib\</JsLibRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(JsLibRoot)node_modules\**</DefaultItemExcludes>
     <DxExtendStartupHost>False</DxExtendStartupHost>
@@ -34,9 +34,9 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.Blazor" Version="20.2.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.0" PrivateAssets="all" />
+    <PackageReference Include="DevExpress.Blazor" Version="20.2.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.2" PrivateAssets="all" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
