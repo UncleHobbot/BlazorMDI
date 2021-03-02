@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyVersion>1.0.21018.0</AssemblyVersion>
-    <FileVersion>1.0.21018.0</FileVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyVersion>1.0.21061.8</AssemblyVersion>
+    <FileVersion>1.0.21061.8</FileVersion>
   </PropertyGroup>
 
 </Project>
